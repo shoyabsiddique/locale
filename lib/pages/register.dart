@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/textbox.dart';
+import 'package:locale/widgets/signup_provider.dart';
+import 'package:locale/widgets/signup_user.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -10,6 +10,12 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  Map<String, Widget> map = {
+    "user": Text("User"),
+    "provider": Text("Provider"),
+  };
+  List<bool> _isSelected = [true, false];
+  dynamic Signupscreen = SignUpUser();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,9 +25,18 @@ class _RegisterState extends State<Register> {
             body: Stack(children: [
               Container(
                 padding: EdgeInsets.only(
-                    right: MediaQuery.of(context).size.width * 0.6,
                     top: MediaQuery.of(context).size.height * 0.04),
-                child: Image.asset("assets/logo.png", fit: BoxFit.cover),
+                child: Row(
+                  children: [
+                    IconButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, icon: Icon(
+                        Icons.keyboard_arrow_left_sharp,
+                      color: Colors.white,
+                    )),
+                    Image.asset("assets/logo.png", width: MediaQuery.of(context).size.width * 0.4,),
+                  ],
+                ),
               ),
               Container(
                 padding: EdgeInsets.only(left: 20, top: MediaQuery.of(context).size.height*0.13),
@@ -62,73 +77,36 @@ class _RegisterState extends State<Register> {
                         padding: EdgeInsets.all(30),
                         child: Column(
                           children: [
-                            MyTextBox(hint: "First Name", type: TextInputType.name,),
-                            SizedBox(
-                              height: 30,
+                            ToggleButtons(
+                              constraints: BoxConstraints.expand(width: MediaQuery.of(context).size.width*0.4),
+                              textStyle: TextStyle(fontSize: MediaQuery.of(context).size.width*0.05),
+                              children: map.entries.map((e) => e.value).toList(),
+                              borderWidth: 3,
+                              borderColor: Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                              isSelected: _isSelected,
+                              selectedColor: Colors.blueGrey,
+                              selectedBorderColor: Color(0xff5aa7ff),
+                              onPressed: (value) {
+                                setState(() {
+                                  _isSelected = List.filled(map.length, false);
+                                  _isSelected[value] = true;
+                                  if(_isSelected[0] == true)
+                                    Signupscreen = SignUpUser();
+                                  else
+                                    Signupscreen = SignUpProvider();
+                                });
+                              },
                             ),
-                            MyTextBox(hint: "Last Name", type: TextInputType.name),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            MyTextBox(hint: "Phone Number", type: TextInputType.phone),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            MyTextBox(hint: "Password", type: TextInputType.visiblePassword,),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            MyTextBox(hint: "Confirm Password", type: TextInputType.visiblePassword,),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Sign Up",
-                                  style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width*0.065,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                CircleAvatar(
-                                  radius: MediaQuery.of(context).size.width*0.065,
-                                  backgroundColor: Color(0xff5aa7ff),
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                            SizedBox(height: 10,),
+                            Signupscreen
                           ],
-                        ),
+                        )
                       ),
                     ),
                   )
               ),
-              Center(
-                child: Container(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.9),
-                  child: TextButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "Go Back To Login",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.width*0.045,
-                        decoration: TextDecoration.underline
-                      ),
-                    ),
-                  ),
-                ),
-              )
+
             ])));
   }
 }

@@ -5,6 +5,7 @@ import 'package:locale/pages/home.dart';
 import 'package:locale/pages/otp.dart';
 import 'package:locale/pages/register.dart';
 import 'package:locale/pages/splash.dart';
+import 'package:locale/widgets/signup_user.dart';
 
 import 'pages/login.dart';
 
@@ -20,7 +21,7 @@ Future<void> main() async{
       '/signup': (context) => Register(),
       '/forgotpass': (context) => ForgotPass(),
       '/otp': (context) => OTP(),
-      'home': (context) => Home()
+      'home': (context) => Home(),
     },
   ));
 }

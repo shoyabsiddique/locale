@@ -136,13 +136,55 @@ class _LoginState extends State<Login> {
                                     phoneNumber: "+91 "+Login.phoneM.value,
                                     verificationCompleted: (PhoneAuthCredential credential) {},
                                     verificationFailed: (FirebaseAuthException e) {
-                                      print(Login.phone);
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.error,
+                                                color: Colors.red,
+                                              ),
+                                              Text('Phone Number Verification Failed'),
+                                            ],
+                                          ),
+                                          duration: Duration(seconds: 3),
+                                          action: SnackBarAction(
+                                            label: 'Dismiss',
+                                            onPressed: () {
+                                              // Dismiss the snackbar
+                                            },
+                                          ),
+                                        ),
+                                      );
+
                                     },
                                     codeSent: (String verificationId, int? resendToken) {
                                       Login.verify = verificationId;
                                       Navigator.pushNamed(context, '/otp');
                                     },
-                                    codeAutoRetrievalTimeout: (String verificationId) {},
+                                    codeAutoRetrievalTimeout: (String verificationId) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.error,
+                                                color: Colors.red,
+                                              ),
+                                              Text('Sms not sent'),
+                                            ],
+                                          ),
+                                          duration: Duration(seconds: 3),
+                                          action: SnackBarAction(
+                                            label: 'Dismiss',
+                                            onPressed: () {
+                                              // Dismiss the snackbar
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
                                 icon: Icon(

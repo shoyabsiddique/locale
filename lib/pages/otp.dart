@@ -85,6 +85,27 @@ class _OTPState extends State<OTP> {
                               print(this.code);
                               Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
                             } on Exception catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.error,
+                                        color: Colors.red,
+                                      ),
+                                      Text('Incorrect OTP'),
+                                    ],
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                  action: SnackBarAction(
+                                    label: 'Dismiss',
+                                    onPressed: () {
+                                      // Dismiss the snackbar
+                                    },
+                                  ),
+                                ),
+                              );
+
                               print(e);
                             }
                           },

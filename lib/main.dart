@@ -16,7 +16,7 @@ Future<void> main() async{
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: 'home',
+    initialRoute: '/splash',
     routes: {
       '/splash': (context) => Splash(),
       '/login': (context) => Login(),

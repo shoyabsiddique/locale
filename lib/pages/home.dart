@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/customnavigationbar.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Home"),
       ),
+      bottomNavigationBar: Custombar(index: 0,)
     );
   }
 }
